@@ -20,7 +20,8 @@ function setUpTheGame(){
 	cards =  [...document.getElementsByClassName("card")];
 	stars = [...document.getElementsByClassName("fa-star")];
 	matchingCounter = 0;
-	//shiffling the cards and then removing the old ones from the deck and adding the new shuffled ones
+	// shiffling the cards and then removing the old ones from the deck and
+	// adding the new shuffled ones
 	cards= shuffle(cards);
 	deck.addEventListener("click",clickingCards);
 	while(deck.firstChild)
@@ -172,7 +173,8 @@ function reset(){
 		deck.removeChild(deck.firstChild);
 	for(let i=0; i<cards.length; i++)
 		deck.appendChild(cards[i]);
-	moves=-1;// -1 so that when we call changeMoves it will increase by 1 and make it 0
+	moves=-1;// -1 so that when we call changeMoves it will increase by 1 and
+				// make it 0
 	
 	seconds=0;
 
@@ -190,6 +192,8 @@ function reset(){
 	changeMoves();
 }
 
+
+// this is for the timer and will be called every 1000ms once the game starts untill it is over 
 function timer(){
 	if(!gameEnded){
 	let secondsString,minutesString;
@@ -202,6 +206,7 @@ function timer(){
 }
 
 
+
 function stringize(timeInt){
 	let timeString = timeInt + "";
 	if(timeString.length < 2)
@@ -210,11 +215,13 @@ function stringize(timeInt){
 		return timeString;
 }
 
+//this function just changes the moves tracker and the  star rating
 function changeMoves(){
 	
 	moves++;
 	const movesElement=document.getElementsByClassName("moves")
-	movesElement[0].innerHTML=moves;// element at 0 is our div that contains the number of moves
+	movesElement[0].innerHTML=moves;// element at 0 is our div that contains the
+									// number of moves
 	if(moves==28)
 		stars[4].classList.remove("fa-star");
 	if(moves==35)
@@ -230,6 +237,11 @@ function changeMoves(){
 let firstCard,secondCard;
 let readyForSecondClick=false;
 let validForChecking=true;
+
+/* This function will be called every time the " dick " is clicked
+ * to handle the click and make the necesary changes or give feedback to the user that he clicked
+ * in the wrong place 
+ *  */
 function clickingCards(event){
 	if(!gameStarted)
 		{
@@ -241,9 +253,10 @@ function clickingCards(event){
 	if (target.tagName=="LI" || target.tagName=="I" )
 		{	if(target.tagName=="I")
 				target =target.parentElement;// if only the icon is clicked
-												// then we get a refrence to the hall card which is
+												// then we get a refrence to the
+												// hall card which is
 												// our target
-			//checking if the same card has been clicked twice
+			// checking if the same card has been clicked twice
 			if(target.classList.contains("open")&&target.classList.contains("show"))
 				{
 				target.classList.remove("open","show");
@@ -253,7 +266,7 @@ function clickingCards(event){
 				}
 
 			
-			//if a matched card is clicked
+			// if a matched card is clicked
 			if(target.classList.contains("match"))
 			{
 			validForChecking=false;
@@ -268,7 +281,8 @@ function clickingCards(event){
 			if(readyForSecondClick && validForChecking)
 			{
 				readyForSecondClick=false;
-				//we show the card and store it in secondCard to compare it with first
+				// we show the card and store it in secondCard to compare it
+				// with first
 				target.classList.toggle("open");
 				target.classList.toggle("show");
 				secondCard=target;
@@ -305,7 +319,8 @@ function clickingCards(event){
 			else if( validForChecking && !readyForSecondClick ) 
 			{
 				readyForSecondClick=true;
-				//we show the card and store it in firstCard to compare it with secondCard
+				// we show the card and store it in firstCard to compare it with
+				// secondCard
 				firstCard=target;
 				target.classList.toggle("open");
 				target.classList.toggle("show");
@@ -313,7 +328,7 @@ function clickingCards(event){
 			}
 			validForChecking=true;
 		}	
-	//if the deck was clicked but not the cards
+	// if the deck was clicked but not the cards
 	else {
 		
 		deck.classList.add("shake");
@@ -325,24 +340,10 @@ function clickingCards(event){
 	
 }
 
+// This function is called to check if two cards are matching
 function checkIfTheSameShape(){
-	//to get access to the <i> element which has the class of the (shape)
+	// to get access to the <i> element which has the class of the (shape)
 	const f =firstCard.firstElementChild, s=secondCard.firstElementChild;
  	return f.classList[1]===s.classList[1];
 }
 
-/*
- * set up the event listener for a card. If a card is clicked: - display the
- * card's symbol (put this functionality in another function that you call from
- * this one) - add the card to a *list* of "open" cards (put this functionality
- * in another function that you call from this one) - if the list already has
- * another card, check to see if the two cards match + if the cards do match,
- * lock the cards in the open position (put this functionality in another
- * function that you call from this one) + if the cards do not match, remove the
- * cards from the list and hide the card's symbol (put this functionality in
- * another function that you call from this one) + increment the move counter
- * and display it on the page (put this functionality in another function that
- * you call from this one) + if all cards have matched, display a message with
- * the final score (put this functionality in another function that you call
- * from this one)
- */
