@@ -3,7 +3,6 @@
 ## Table of Contents
 
 * [The Game Rules](#instructions)
-* [Contributing](#contributing)
 
 ## The Game Rules
 You have to click two cards to see weather they match or not.
